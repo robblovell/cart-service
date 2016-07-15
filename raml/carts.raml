@@ -1,0 +1,61 @@
+
+  displayName: Carts Resource
+
+  description: |
+    This is a top level description of the cart resource
+  get:
+    description: get all my carts
+    queryParameters:
+      query:
+        displayName: Query
+        type: string
+        description: query on an indexed field of the cart
+        example: name="A cart"
+        required: false
+  post:
+    description: |
+      Create a new cart.
+    body:
+      application/json:
+
+    responses:
+      200:
+        description: A cart was created.
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: cart identifier
+        minLength: 1
+        maxLength: 10
+    get:
+      description: Retrieve a specific cart
+      responses:
+        200:
+          body:
+            application/json:
+             example: |
+                {
+                  "data": {
+                    "id": "...",
+                    "name": "My House",
+                  },
+                  "success": true,
+                  "status": 200
+                }
+    put:
+      description: Update the cart
+      body:
+        application/x-www-form-urlencoded:
+          formParameters:
+            name:
+              description: name of the cart
+              type: string
+              example: Naruto Uzumaki's House
+            active:
+              type: boolean
+    delete:
+      description: Delete the cart
+
+    /items:
+      !include items.raml

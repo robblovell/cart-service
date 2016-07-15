@@ -6,14 +6,13 @@
 
   router = express.Router();
 
-  config = require('../config/config');
+  config = require('../config/configuration');
 
   router.get('/', function(req, res, next) {
     return res.render('index', {
       title: config.title,
       description: config.description,
-      host: config.host,
-      scheme: config.scheme
+      host: config.scheme + "://" + config.host
     });
   });
 

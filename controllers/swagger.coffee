@@ -6,17 +6,23 @@ module.exports = (app, resources, spec='/spec', config) ->
     _.each(resources, (resource) ->
 
         swagger = resource.swagger()
-#        if (swagger.paths["/carts"]?)
-#            swagger.paths["/carts"].get.parameters.push({
-#                    name: 'query',
-#                    in: 'query',
-#                    description: 'Query by example. Pass a JSON object to find, for example: {"age": {"$gte": 21, "$lte": 65}.',
-#                    type: 'string',
-#                    required: false,
-#                    default: ''
-#                }
-#            )
-        paths = _.assign(paths, swagger.paths)
+        if (swagger.paths["/carts"]?)
+            swagger.paths["/carts"].get.parameters.push({
+                    name: 'query',
+                    in: 'query',
+                    description: 'Query by example. Pass a JSON object to find, for example: {"Id": "someid"}.',
+                    type: 'string',
+                    required: false,
+                    default: ''
+                }
+            )
+        # hack for the cart id being a member id...
+        newPaths = []
+        for key,value of swagger.paths
+            newKey = key.replace('CartsId','Id')
+            newPaths[newKey] = value
+
+        paths = _.assign(paths, newPaths)
         definitions = _.assign(definitions, swagger.definitions)
     )
 #    for path,verbs of paths

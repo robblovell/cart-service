@@ -12,9 +12,26 @@
     paths = {};
     definitions = {};
     _.each(resources, function(resource) {
-      var swagger;
+      var key, newKey, newPaths, ref, swagger, value;
       swagger = resource.swagger();
-      paths = _.assign(paths, swagger.paths);
+      if ((swagger.paths["/carts"] != null)) {
+        swagger.paths["/carts"].get.parameters.push({
+          name: 'query',
+          "in": 'query',
+          description: 'Query by example. Pass a JSON object to find, for example: {"Id": "someid"}.',
+          type: 'string',
+          required: false,
+          "default": ''
+        });
+      }
+      newPaths = [];
+      ref = swagger.paths;
+      for (key in ref) {
+        value = ref[key];
+        newKey = key.replace('CartsId', 'Id');
+        newPaths[newKey] = value;
+      }
+      paths = _.assign(paths, newPaths);
       return definitions = _.assign(definitions, swagger.definitions);
     });
     specification = {

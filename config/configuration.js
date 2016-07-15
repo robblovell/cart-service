@@ -44,6 +44,7 @@
       config.basepath = "/";
       config.host = "localhost:3000";
       config.schemes = ['http'];
+      config.scheme = 'http';
   }
 
   console.log("configuration: " + JSON.stringify(config));

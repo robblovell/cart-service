@@ -1,9 +1,10 @@
 express = require('express')
 router = express.Router()
-config = require('../config/config')
+config = require('../config/configuration')
 # GET home page. */
 router.get('/', (req, res, next) ->
-  res.render('index', { title: config.title, description: config.description, host: config.host, scheme: config.scheme })
+  res.render('index', { title: config.title, description: config.description, host: config.scheme+"://"+config.host})
+
 )
 
 module.exports = router

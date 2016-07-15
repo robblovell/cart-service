@@ -31,11 +31,15 @@ config = require('./config/configuration')
 mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 mongoose.connect(config.db) # connect to our database
+item= require('./models/item')
+
 cart= require('./models/cart')
-Carts = require('./controllers/carts')(app, cart.model)
+Carts = require('./controllers/carts')(app, cart.model, "Carts")
+CartsItems = require('./controllers/carts_items')(app, item.model)
 
 Resources = {
   Carts:Carts
+  CartsItems:CartsItems
 }
 
 swagger = require('./controllers/swagger')(app, Resources, '/api', config)
